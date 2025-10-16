@@ -1,238 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Finance Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Finance Tracker</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">Student Finance Tracker</div>
-                <nav>
-                    <ul>
-                        <li><a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a></li>
-                        <li><a href="#records" class="nav-link" data-section="records">Records</a></li>
-                        <li><a href="#add-record" class="nav-link" data-section="add-record">Add Record</a></li>
-                        <li><a href="#settings" class="nav-link" data-section="settings">Settings</a></li>
-                        <li><a href="#about" class="nav-link" data-section="about">About</a></li>
-                    </ul>
-                </nav>
-            </div>
+  <a href="#main-content" class="sr-only" id="skip-to-content">Skip to main content</a>
+
+  <header>
+    <h1>Student Finance Tracker</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#records">Records</a></li>
+      <li><a href="#add-form">Add Record</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <main id="main-content">
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page-section">
+      <h2>Dashboard</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Records</h3>
+          <p id="total-records">0</p>
         </div>
-    </header>
-
-    <main id="main-content">
-        <div class="container">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="section active">
-                <h2>Dashboard</h2>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Total Records</div>
-                        <div class="stat-value" id="total-records">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Total Spent</div>
-                        <div class="stat-value" id="total-spent">$0.00</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Top Category</div>
-                        <div class="stat-value" id="top-category">-</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Spending Cap</div>
-                        <div class="stat-value" id="spending-cap">$0.00</div>
-                        <div id="cap-status" aria-live="polite"></div>
-                    </div>
-                </div>
-                
-                <h3>Last 7 Days Trend</h3>
-                <div id="trend-container">
-                    <p>No data available</p>
-                </div>
-            </section>
-
-            <!-- Records Section -->
-            <section id="records" class="section">
-                <h2>Financial Records</h2>
-                
-                <div class="records-header">
-                    <div class="search-container">
-                        <input type="text" id="search-input" placeholder="Search records...">
-                        <button id="case-toggle" class="btn">Case Sensitive</button>
-                    </div>
-                    <div>
-                        <button id="sort-date" class="btn">Sort by Date</button>
-                        <button id="sort-desc" class="btn">Sort by Description</button>
-                        <button id="sort-amount" class="btn">Sort by Amount</button>
-                    </div>
-                </div>
-                
-                <div class="mobile-only" id="records-cards">
-                    <!-- Mobile cards will be rendered here -->
-                </div>
-                
-                <div class="mobile-hidden">
-                    <table id="records-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="records-body">
-                            <!-- Records will be rendered here -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div id="no-records" class="mobile-hidden">
-                    <p>No records found. Add your first record!</p>
-                </div>
-            </section>
-
-            <!-- Add/Edit Record Section -->
-            <section id="add-record" class="section">
-                <h2 id="form-title">Add New Record</h2>
-                
-                <form id="record-form">
-                    <input type="hidden" id="record-id">
-                    
-                    <div class="form-group">
-                        <label for="description">Description *</label>
-                        <input type="text" id="description" required>
-                        <div id="description-error" class="error"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="amount">Amount *</label>
-                        <input type="text" id="amount" required>
-                        <div id="amount-error" class="error"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="category">Category *</label>
-                        <select id="category" required>
-                            <option value="">Select a category</option>
-                            <!-- Categories will be populated from settings -->
-                        </select>
-                        <div id="category-error" class="error"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="date">Date *</label>
-                        <input type="date" id="date" required>
-                        <div id="date-error" class="error"></div>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button type="submit" class="btn">Save Record</button>
-                        <button type="button" id="cancel-edit" class="btn">Cancel</button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- Settings Section -->
-            <section id="settings" class="section">
-                <h2>Settings</h2>
-                
-                <div class="settings-grid">
-                    <div>
-                        <h3>Spending Cap</h3>
-                        <div class="form-group">
-                            <label for="spending-cap-input">Monthly Spending Cap ($)</label>
-                            <input type="number" id="spending-cap-input" min="0" step="0.01">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3>Currency Settings</h3>
-                        <div class="form-group">
-                            <label for="base-currency">Base Currency</label>
-                            <select id="base-currency">
-                                <option value="USD">USD ($)</option>
-                                <option value="EUR">EUR (€)</option>
-                                <option value="RWF">RWF </option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="exchange-rate">Exchange Rate (to USD)</label>
-                            <input type="number" id="exchange-rate" min="0" step="0.0001" placeholder="e.g., 0.85 for EUR">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3>Categories</h3>
-                        <div class="form-group">
-                            <label for="new-category">Add New Category</label>
-                            <input type="text" id="new-category" placeholder="Enter category name">
-                            <button id="add-category" class="btn" style="margin-top: 8px;">Add Category</button>
-                        </div>
-                        
-                        <div id="categories-list" style="margin-top: 16px;">
-                            <!-- Categories will be listed here -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 32px;">
-                    <h3>Import/Export Data</h3>
-                    <div class="btn-group">
-                        <button id="export-btn" class="btn">Export Data</button>
-                        <button id="import-btn" class="btn">Import Data</button>
-                        <input type="file" id="import-file" accept=".json" style="display: none;">
-                    </div>
-                    <div id="import-message" aria-live="polite" style="margin-top: 8px;"></div>
-                </div>
-            </section>
-
-            <!-- About Section -->
-            <section id="about" class="section">
-                <h2>About Student Finance Tracker</h2>
-                <p>This simple finance tracker helps students manage their expenses effectively. Track your spending, set budgets, and gain insights into your financial habits.</p>
-                
-                <h3>Features</h3>
-                <ul style="margin-left: 24px; margin-top: 16px;">
-                    <li>Track expenses with categories</li>
-                    <li>Set monthly spending caps</li>
-                    <li>View spending trends</li>
-                    <li>Import/export your data</li>
-                    <li>Responsive design for all devices</li>
-                </ul>
-                
-                <h3>Contact</h3>
-                <p>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
-                <p>Email: your.email@example.com</p>
-            </section>
+        <div class="stat-card">
+          <h3>Total Spent</h3>
+          <p id="total-spent">0.00</p>
         </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="logo" style="color: white;">Student Finance Tracker</div>
-                <div class="footer-links">
-                    <a href="#dashboard">Dashboard</a>
-                    <a href="#records">Records</a>
-                    <a href="#add-record">Add Record</a>
-                    <a href="#settings">Settings</a>
-                    <a href="#about">About</a>
-                </div>
-                <p>&copy; 2025 Student Finance Tracker. All rights reserved.</p>
-            </div>
+        <div class="stat-card">
+          <h3>Top Category</h3>
+          <p id="top-category">-</p>
         </div>
-    </footer>
+        <div class="stat-card">
+          <h3>Remaining</h3>
+          <p id="remaining">-</p>
+          <div class="trend-bar" id="remaining-bar" style="width: 0%"></div>
+        </div>
+      </div>
 
-    <script src="script.js"></script>
+      <h3>Last 7 Days Trend</h3>
+      <div id="trend-container" class="trend-container"></div>
+
+      <div aria-live="polite" id="budget-message" class="budget-message"></div>
+    </section>
+
+    <!-- RECORDS -->
+    <section id="records" class="page-section">
+      <h2>Records</h2>
+      <div class="controls">
+        <input type="text" id="search-input" placeholder="Search records..." />
+        <label>
+          <input type="checkbox" id="case-sensitive" /> Case-sensitive
+        </label>
+        <button id="sort-date">Sort by Date</button>
+        <button id="sort-desc">Sort by Description</button>
+        <button id="sort-amount">Sort by Amount</button>
+      </div>
+
+      <table class="record-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="records-table-body"></tbody>
+      </table>
+
+      <div class="record-cards" id="records-cards-container"></div>
+    </section>
+
+    <!-- ADD/EDIT FORM -->
+    <section id="add-form" class="page-section">
+      <h2 id="form-title">Add New Record</h2>
+      <form id="record-form">
+        <input type="hidden" id="record-id" />
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" required />
+          <div class="error" id="desc-error"></div>
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="text" id="amount" required />
+          <div class="error" id="amount-error"></div>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" required></select>
+          <div class="error" id="category-error"></div>
+        </div>
+        <div class="form-group">
+          <label for="date">Date (YYYY-MM-DD)</label>
+          <input type="text" id="date" required />
+          <div class="error" id="date-error"></div>
+        </div>
+        <button type="submit">Save Record</button>
+        <button type="button" id="cancel-edit">Cancel</button>
+      </form>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="page-section">
+      <h2>Settings</h2>
+      <div class="form-group">
+        <label for="spending-cap">Monthly Spending Cap</label>
+        <input type="number" id="spending-cap" step="0.01" />
+      </div>
+      <div class="form-group">
+        <label for="base-currency">Base Currency</label>
+        <input type="text" id="base-currency" value="USD" />
+      </div>
+      <div class="form-group">
+        <label>Currency 1</label>
+        <input type="text" id="currency1" placeholder="e.g., EUR" />
+        <input type="number" id="rate1" placeholder="Rate to USD" step="0.0001" />
+      </div>
+      <div class="form-group">
+        <label>Currency 2</label>
+        <input type="text" id="currency2" placeholder="e.g., GBP" />
+        <input type="number" id="rate2" placeholder="Rate to USD" step="0.0001" />
+      </div>
+      <div class="form-group">
+        <label for="custom-categories">Custom Categories (comma-separated)</label>
+        <input type="text" id="custom-categories" placeholder="Food, Books, Transport..." />
+      </div>
+      <button id="save-settings">Save Settings</button>
+      <button id="export-btn">Export Data</button>
+      <button id="import-btn">Import Data</button>
+      <input type="file" id="import-file" accept=".json" />
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="page-section">
+      <h2>About</h2>
+      <p>This app helps students track daily expenses simply and privately.</p>
+      <p>GitHub: <a href="https://github.com/your-username" target="_blank">T-Sylivie</a></p>
+      <p>Email: s.tumukunde@alustudent.com</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Student Finance Tracker | Built with vanilla HTML, CSS, JS</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
